@@ -1,17 +1,12 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import { profile, skillGroups } from "@/lib/data";
-
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+import ThemeProvider from "@/components/ThemeProvider";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://sifathossain456.github.io/portfolio"),
-  title: {
-    default: `${profile.name} — ${profile.title}`,
-    template: `%s | ${profile.name}`,
-  },
-  description: profile.bio,
+  metadataBase: new URL("https://sifathossain456.github.io/portfolio/"),
+  title: "Sifat Hossain — Web3 & DeFi Developer Portfolio",
+  description:
+    "Sifat Hossain is a Web3 & DeFi developer building multi-chain decentralized applications across Monad, Sui, Aptos, Solana, Base, and Arc. Explore 40+ projects, skills, and a developer timeline.",
   keywords: [
     "Sifat Hossain",
     "Web3 Developer",
@@ -19,58 +14,90 @@ export const metadata: Metadata = {
     "Solidity",
     "Next.js",
     "Base",
-    "Ethereum",
-    "Smart Contracts",
+    "Arc Network",
     "Blockchain",
+    "Smart Contracts",
     "TypeScript",
   ],
-  authors: [{ name: profile.name }],
-  creator: profile.name,
+  authors: [{ name: "Sifat Hossain" }],
+  creator: "Sifat Hossain",
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://sifathossain456.github.io/portfolio",
-    title: `${profile.name} — ${profile.title}`,
-    description: profile.bio,
-    siteName: `${profile.name} Portfolio`,
-    images: [{ url: profile.avatar, width: 400, height: 400, alt: profile.name }],
+    url: "https://sifathossain456.github.io/portfolio/",
+    title: "Sifat Hossain — Web3 & DeFi Developer Portfolio",
+    description:
+      "Building decentralized applications across Monad, Sui, Aptos, Solana, Base & Arc. Explore 40+ projects.",
+    images: [
+      {
+        url: "https://avatars.githubusercontent.com/u/53669494?v=4",
+        width: 400,
+        height: 400,
+        alt: "Sifat Hossain",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${profile.name} — ${profile.title}`,
-    description: profile.bio,
-    creator: `@${profile.twitter}`,
-    images: [profile.avatar],
+    title: "Sifat Hossain — Web3 & DeFi Developer Portfolio",
+    description:
+      "Building decentralized applications across Monad, Sui, Aptos, Solana, Base & Arc.",
+    creator: "@Sifat551",
   },
   robots: {
     index: true,
     follow: true,
-    googleBot: { index: true, follow: true, "max-image-preview": "large" },
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
-  alternates: { canonical: "https://sifathossain456.github.io/portfolio" },
 };
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Person",
-  name: profile.name,
-  url: "https://sifathossain456.github.io/portfolio",
-  image: profile.avatar,
-  jobTitle: profile.title,
-  description: profile.bio,
-  sameAs: [profile.githubUrl, profile.twitterUrl],
-  knowsAbout: skillGroups.flatMap((g) => g.skills.map((s) => s.name)),
+export const viewport: Viewport = {
+  themeColor: "#8b5cf6",
+  width: "device-width",
+  initialScale: 1,
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} font-sans antialiased bg-slate-950`}>
+      <head>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              name: "Sifat Hossain",
+              jobTitle: "Web3 & DeFi Developer",
+              url: "https://sifathossain456.github.io/portfolio/",
+              image: "https://avatars.githubusercontent.com/u/53669494?v=4",
+              sameAs: [
+                "https://github.com/SifatHossain456",
+                "https://x.com/Sifat551",
+              ],
+              email: "mailto:sifathossain551@gmail.com",
+              address: {
+                "@type": "PostalAddress",
+                addressCountry: "Bangladesh",
+              },
+            }),
+          }}
         />
-        {children}
+      </head>
+      <body>
+        <ThemeProvider>
+          <div className="noise-overlay" />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

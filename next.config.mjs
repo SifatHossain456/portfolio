@@ -1,4 +1,7 @@
 /** @type {import('next').NextConfig} */
+const isGithubPages = process.env.DEPLOY_TARGET === "github-pages";
+const repoName = "portfolio";
+
 const nextConfig = {
   reactStrictMode: true,
   typescript: {
@@ -8,18 +11,27 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "avatars.githubusercontent.com",
-      },
-      {
-        protocol: "https",
-        hostname: "opengraph.githubassets.com",
-      },
-    ],
-  },
+  ...(isGithubPages
+    ? {
+        output: "export",
+        basePath: `/${repoName}`,
+        assetPrefix: `/${repoName}/`,
+        images: { unoptimized: true },
+      }
+    : {
+        images: {
+          remotePatterns: [
+            {
+              protocol: "https",
+              hostname: "avatars.githubusercontent.com",
+            },
+            {
+              protocol: "https",
+              hostname: "opengraph.githubassets.com",
+            },
+          ],
+        },
+      }),
 };
 
 export default nextConfig;

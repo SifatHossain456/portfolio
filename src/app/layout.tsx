@@ -6,7 +6,7 @@ import { profile, skillGroups } from "@/lib/data";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://sifat-portfolio.vercel.app"),
+  metadataBase: new URL("https://sifathossain456.github.io/portfolio"),
   title: {
     default: `${profile.name} — ${profile.title}`,
     template: `%s | ${profile.name}`,
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://sifat-portfolio.vercel.app",
+    url: "https://sifathossain456.github.io/portfolio",
     title: `${profile.name} — ${profile.title}`,
     description: profile.bio,
     siteName: `${profile.name} Portfolio`,
@@ -47,14 +47,14 @@ export const metadata: Metadata = {
     follow: true,
     googleBot: { index: true, follow: true, "max-image-preview": "large" },
   },
-  alternates: { canonical: "https://sifat-portfolio.vercel.app" },
+  alternates: { canonical: "https://sifathossain456.github.io/portfolio" },
 };
 
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: profile.name,
-  url: "https://sifat-portfolio.vercel.app",
+  url: "https://sifathossain456.github.io/portfolio",
   image: profile.avatar,
   jobTitle: profile.title,
   description: profile.bio,

@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
-import { profile } from "@/lib/data";
+import { profile, skillGroups } from "@/lib/data";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -51,11 +50,27 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://sifat-portfolio.vercel.app" },
 };
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: profile.name,
+  url: "https://sifat-portfolio.vercel.app",
+  image: profile.avatar,
+  jobTitle: profile.title,
+  description: profile.bio,
+  sameAs: [profile.githubUrl, profile.twitterUrl],
+  knowsAbout: skillGroups.flatMap((g) => g.skills.map((s) => s.name)),
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} font-sans antialiased`}>
-        <ThemeProvider>{children}</ThemeProvider>
+      <body className={`${inter.variable} font-sans antialiased bg-slate-950`}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        {children}
       </body>
     </html>
   );
